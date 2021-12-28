@@ -2,7 +2,7 @@
 A highly configurable feature-rich third person camera.
 
 #### Features
-- Highly Configurable
+- Tons of configuration options
 - Layer based reposition clipping
 - Over-the-shoulder horizontal offset and realtime shoulder swapping
 - Zoom, rotate horizontally/vertically, adjust height
