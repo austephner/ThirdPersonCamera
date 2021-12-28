@@ -10,7 +10,7 @@ A highly configurable feature-rich third person camera.
 - Extensible
 - Inlcluded prefab works out of the box
 
-![Example](https://i.imgur.com/KFlpDJ8.gif)
+![Example](https://i.imgur.com/KFlpDJ8.mp4)
 
 # Getting Started
 1. Add the package to Unity through the Package Manager or download the zipped version and extract it to your assets folder.
