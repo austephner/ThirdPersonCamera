@@ -1,0 +1,12 @@
+﻿{
+  "name": "com.austephnerllc.thirdpersoncamera",
+  "version": "1.0.0",
+  "displayName": "Third Person Camera",
+  "description": "Additional functionality for Unity Coroutines and IEnumerators.",
+  "unity": "2020.3",
+  "author": {
+    "name": "Austephner LLC",
+    "email": "support@austephner.com",
+    "url": "https://www.austephner.com"
+  }
+}
