@@ -1,12 +1,14 @@
 {
-    "name": "com.austephnerllc.thirdpersoncamera",
-    "version": "1.0.0",
-    "displayName": "Third Person Camera",
-    "description": "A highly configurable feature-rich third person camera.",
-    "unity": "2020.3",
-    "author": {
-        "name": "Austephner LLC",
-        "email": "support@austephner.com",
-        "url": "https://www.austephner.com"
-    }
+    "name": "austephnerllc.thirdpersoncamera",
+    "rootNamespace": "Third Person Camera",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
