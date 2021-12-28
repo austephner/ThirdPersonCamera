@@ -8,6 +8,7 @@ A highly configurable feature-rich third person camera.
 - Zoom, rotate horizontally/vertically, adjust height
 - Separate horizontal and vertical rotation speeds and sensitivities
 - Extensible
+- Control the camera through scripting or let it update itself with Unity's `Input` system
 - Inlcluded prefab works out of the box
 
 ![Example](https://i.imgur.com/LnR1Eg8.gif)
