@@ -7,7 +7,6 @@ using UnityEngine.Serialization;
 /// are moved on the standard "Update" call stack. Can be configured to pick up input on its own or be controlled
 /// externally from another script.
 /// </summary>
-[ExecuteAlways]
 public class ThirdPersonCamera : MonoBehaviour
 {
     #region Settings
@@ -117,7 +116,16 @@ public class ThirdPersonCamera : MonoBehaviour
         set => _heightTransform.localPosition = new Vector3(0, value, 0);
     }
     
+    /// <summary>
+    /// Allows for X and Y adjustment to the camera's look direction. It's overridden if <see cref="lookTarget"/> isn't
+    /// null or unassigned.
+    /// </summary>
     public Vector2 lookInput { get; set; }
+    
+    /// <summary>
+    /// Forces the camera's look position, disregarding all look input.
+    /// </summary>
+    public Transform lookTarget { get; set; }
 
     public Transform cameraTransform => _cameraTransform;
 
@@ -187,7 +195,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
     private void OnEnable()
     {
-        _zoom = _cameraTransform.localPosition.z;
+        _zoom = _targetZoom = _cameraTransform.localPosition.z;
         _horizontalOffset = _horizontalOffsetTransform.localPosition.x;
         _transform = transform;
         _targetRotationY = _transform.rotation;
@@ -197,7 +205,7 @@ public class ThirdPersonCamera : MonoBehaviour
     private void Update()
     {
         GatherPlayerInputs();
-        CalculateTargetPositions();
+        CalculateTargetFields();
     }
 
     private void LateUpdate()
@@ -389,11 +397,23 @@ public class ThirdPersonCamera : MonoBehaviour
         _targetZoom = -Mathf.Clamp(Mathf.Abs(_targetZoom), Mathf.Abs(_minZoomIn), Mathf.Abs(_maxZoomOut));
     }
     
-    protected virtual void CalculateTargetPositions()
+    protected virtual void CalculateTargetFields()
     {
         _targetPosition = followTarget ? followTarget.position : _transform.position;
-        _targetRotationY = Quaternion.Euler(CalculateRotationY(_transform.rotation.eulerAngles, lookInput));
-        _targetRotationX = Quaternion.Euler(CalculateRotationX(_xAxis.localRotation.eulerAngles, lookInput));
+
+        if (lookTarget)
+        {
+            var direction = lookTarget.position - _heightTransform.position;
+            var rotation = Quaternion.LookRotation(direction);
+            var eulerAngles = ClampEulerAngles(rotation.eulerAngles);
+            _targetRotationY = Quaternion.Euler(CalculateRotationY(eulerAngles, Vector2.zero));
+            _targetRotationX = Quaternion.Euler(CalculateRotationX(eulerAngles, Vector2.zero));
+        }
+        else if (lookInput != Vector2.zero)
+        {
+            _targetRotationY = Quaternion.Euler(CalculateRotationY(_transform.rotation.eulerAngles, lookInput));
+            _targetRotationX = Quaternion.Euler(CalculateRotationX(_xAxis.localRotation.eulerAngles, lookInput));
+        }
     }
 
     protected virtual Vector2 GetPlayerLookInput()
@@ -432,7 +452,16 @@ public class ThirdPersonCamera : MonoBehaviour
         eulerAngles.x += input.y * _verticalRotationSensitivity * (_invertVerticalCameraInput ? -1.0f : 1.0f);
         eulerAngles.y = 0;
         eulerAngles.z = 0;
+        
+        return ClampEulerAngles(eulerAngles);
+    }
 
+    #endregion
+
+    #region Public Utilities
+    
+    public Vector3 ClampEulerAngles(Vector3 eulerAngles)
+    {
         if (eulerAngles.x > 180f)
         {
             eulerAngles.x -= 360;
@@ -442,10 +471,6 @@ public class ThirdPersonCamera : MonoBehaviour
 
         return eulerAngles;
     }
-
-    #endregion
-
-    #region Public Utilities
 
     public Vector3 GetHorizontalTransformDirection(Vector3 direction)
     {

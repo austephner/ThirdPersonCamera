@@ -13,6 +13,18 @@ A highly configurable feature-rich third person camera.
 
 ![Example](https://i.imgur.com/LnR1Eg8.gif)
 
+#### Changelog
+- **1.1.0** (Current)
+  - Added `lookTarget` property to override `lookInput`, causing camera to forcibly rotate to look at another `transform`.
+  - Removed `[ExecuteAlways]` from the camera's behaviour
+  - Fixed `_targetZoom` bug in `Start()` and inspector editing
+  - Added some public utilities
+- 1.0.1
+  - Package fix for importing into Unity through the Package Manager
+  - Small code adjustments
+- 1.0.0
+  - Initial release
+
 # Getting Started
 1. Add the package to Unity through the Package Manager or download the zipped version and extract it to your assets folder.
 2. Drag and drop the `Samples/ThirdPersonCamera.prefab` into your scene. 
