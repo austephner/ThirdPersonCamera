@@ -504,6 +504,31 @@ public class ThirdPersonCamera : MonoBehaviour
                _cameraTransform.forward * 10.0f;
     }
     
+    public Vector3 GetRaycastedScreenPosition(Vector3 screenPosition, LayerMask layerMask, float sphereCastRadius)
+    {
+        if (Physics.Raycast(
+            _camera.ScreenPointToRay(screenPosition),
+            out RaycastHit rh,
+            Mathf.Infinity,
+            layerMask))
+        {
+            return rh.point;
+        }
+        
+        if (Physics.SphereCast(
+            _camera.ScreenPointToRay(screenPosition), 
+            sphereCastRadius, 
+            out RaycastHit sh, 
+            Mathf.Infinity, 
+            layerMask))
+        {
+            return sh.point;
+        }
+
+        return _camera.ScreenToWorldPoint(screenPosition) +
+               _cameraTransform.forward * 10.0f;
+    }
+    
     /// <summary>
     /// Starts a raycast at the <see cref="horizontalOffset"/> transform position and points forward using the
     /// camera's transform forward direction. This is useful for avoiding raycasting anything that would
