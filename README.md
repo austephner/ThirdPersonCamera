@@ -14,7 +14,9 @@ A highly configurable feature-rich third person camera.
 ![Example](https://i.imgur.com/LnR1Eg8.gif)
 
 #### Changelog
-- **1.1.0** (Current)
+- 1.1.1 (Current)
+  - Added function to retrieve a world-raycasted point given a screen point
+- 1.1.0
   - Added `lookTarget` property to override `lookInput`, causing camera to forcibly rotate to look at another `transform`.
   - Removed `[ExecuteAlways]` from the camera's behaviour
   - Fixed `_targetZoom` bug in `Start()` and inspector editing
